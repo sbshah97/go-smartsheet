@@ -112,13 +112,13 @@ func TestSheet_GetColumnById(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			s := Sheet{
-				Id:                         tt.fields.Id,
-				FromId:                     tt.fields.FromId,
-				OwnerId:                    tt.fields.OwnerId,
+				Id:                         int64(tt.fields.Id),
+				FromId:                     int64(tt.fields.FromId),
+				OwnerId:                    int64(tt.fields.OwnerId),
 				AccessLevel:                tt.fields.AccessLevel,
 				Attachments:                tt.fields.Attachments,
 				Columns:                    tt.fields.Columns,
-				CreatedAt:                  tt.fields.CreatedAt,
+				CreatedAt:                  tt.fields.CreatedAt.Format("2006-01-02 15:04:05"),
 				CrossSheetReferences:       tt.fields.CrossSheetReferences,
 				DependenciesEnabled:        tt.fields.DependenciesEnabled,
 				Discussions:                tt.fields.Discussions,
@@ -126,7 +126,7 @@ func TestSheet_GetColumnById(t *testing.T) {
 				Favorite:                   tt.fields.Favorite,
 				GanttEnabled:               tt.fields.GanttEnabled,
 				HasSummaryFields:           tt.fields.HasSummaryFields,
-				ModifiedAt:                 tt.fields.ModifiedAt,
+				ModifiedAt:                 tt.fields.ModifiedAt.Format("2006-01-02 15:04:05"),
 				Name:                       tt.fields.Name,
 				Owner:                      tt.fields.Owner,
 				Permalink:                  tt.fields.Permalink,
@@ -143,7 +143,7 @@ func TestSheet_GetColumnById(t *testing.T) {
 				Version:                    tt.fields.Version,
 				Workspace:                  tt.fields.Workspace,
 			}
-			got, err := s.GetColumnById(tt.args.id)
+			got, err := s.GetColumnById(int64(tt.args.id))
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetColumnById() error = %v, wantErr %v", err, tt.wantErr)
 				return
