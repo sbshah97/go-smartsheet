@@ -21,6 +21,23 @@ import (
 	"time"
 )
 
+type ListSheets struct {
+	PageNumber int `json:"pageNumber"`
+	PageSize   int `json:"pageSize"`
+	TotalPages int `json:"totalPages"`
+	TotalCount int `json:"totalCount"`
+	Data []SheetsData `json:"sheetsData"`
+}
+
+type SheetsData struct {
+	ID          int       `json:"id"`
+	Name        string    `json:"name"`
+	AccessLevel string    `json:"accessLevel"`
+	Permalink   string    `json:"permalink"`
+	CreatedAt   time.Time `json:"createdAt"`
+	ModifiedAt  time.Time `json:"modifiedAt"`
+}
+
 type Sheet struct {
 	Id                         int64                 `json:"id"`                         //Sheet Id
 	FromId                     int64                 `json:"fromId"`                     // The Id of the template from which to create the sheet. This attribute can be specified in a request, but is never present in a response.
@@ -85,6 +102,19 @@ func (c Client) GetSheet(id string) (*Sheet, error) {
 		return nil, fmt.Errorf("could not decode JSON response: %v", dErr)
 	}
 	return &sheet, nil
+}
+
+// Return Sheets object
+func (c Client) ListSheets() (*ListSheets, error) {
+	var listSheets ListSheets
+	resp, err := c.get(fmt.Sprintf("%s/sheets/", apiEndpoint))
+	if err != nil {
+		return nil, err
+	}
+	if dErr := c.decodeJSON(resp, &listSheets); dErr != nil {
+		return nil, fmt.Errorf("could not decode JSON response: %v", dErr)
+	}
+	return &listSheets, nil
 }
 
 // Return ResultObject object
