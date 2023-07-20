@@ -26,9 +26,10 @@ import (
 	"time"
 )
 
+// TODO: Add this as exported endpoint or add a method to modify this value
 var (
 	// Smartsheet API endpoint
-	apiEndpoint = "https://api.smartsheet.com/2.0"
+	apiEndpoint = "https://api.test.smartsheet.com/b/rest/2.0"
 )
 
 type HTTPClient interface {
