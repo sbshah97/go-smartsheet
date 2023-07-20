@@ -45,7 +45,7 @@ type CellAuthor struct {
 }
 
 // Return ResultObject object
-func (c Client) GetHistory(sheetId int64, rowId int, columnId int) (*HistoryResponse, error) {
+func (c Client) GetHistory(sheetId int64, rowId int64, columnId int64) (*HistoryResponse, error) {
 	var historyResponse HistoryResponse
 	resp, err := c.get(fmt.Sprintf("%s/sheets/%d/rows/%d/columns/%d/history", apiEndpoint, sheetId, rowId, columnId))
 	if err != nil {
